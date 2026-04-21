@@ -1,7 +1,19 @@
 import os
 import shutil
+from pathlib import Path
 
 running = True
+
+print("  ______   ________  __  __                      _______  __      __ ")
+print(" /      \\ |        \\|  \\|  \\                    |       \\|  \\    /  \\")
+print("|  $$$$$$\| $$$$$$$$ \$$| $$  ______    _______ | $$$$$$$\\$$\  /  $$")
+print("| $$__| $$| $$__    |  \| $$ /      \  /       \| $$__/ $$ \$$\/  $$ ")
+print("| $$    $$| $$  \   | $$| $$|  $$$$$$\|  $$$$$$$| $$    $$  \$$  $$  ")
+print("| $$$$$$$$| $$$$$   | $$| $$| $$    $$ \$$    \ | $$$$$$$    \$$$$   ")
+print("| $$  | $$| $$      | $$| $$| $$$$$$$$ _\$$$$$$\| $$         | $$    ")
+print("| $$  | $$| $$      | $$| $$ \$$     \|       $$| $$         | $$    ")
+print(" \$$   \$$ \$$       \$$ \$$  \$$$$$$$ \$$$$$$$  \$$          \$$    ")
+
 
 while running:
     command = input("fm>")
@@ -21,6 +33,13 @@ while running:
         os.makedirs(Splitted[1] + Splitted[2], exist_ok=True)
         print(f"Created {Splitted[2]} at {Splitted[1]}")
     
+    elif Splitted[0] == "del":
+        file = Path(Splitted[1] + "/" + Splitted[2])
+        if file.exists() == True:
+            file.unlink(file)
+        else:
+            print("file doesnt exist")
+
     elif Splitted[0] == "ls":
         path = Splitted[1] if len(Splitted) > 1 else "."
         try:
@@ -35,4 +54,5 @@ while running:
         
     elif Splitted[0] == "quit":
         running = False
+
 print("quitting terminal")
