@@ -1,8 +1,14 @@
+
 import os
 import shutil
 from pathlib import Path
 
 running = True
+
+try:
+    import plugin
+except ImportError:
+    plugin = None
 
 print("  ______   ________  __  __                      _______  __      __ ")
 print(" /      \\ |        \\|  \\|  \\                    |       \\|  \\    /  \\")
@@ -25,29 +31,32 @@ while running:
     if Splitted[0] == "mv":
         shutil.move(Splitted[1], Splitted[2])
         print(f"moved {Splitted[1]} to {Splitted[2]}")
-    
+
     elif Splitted[0] == "ren":
 
         shutil.move(Splitted[1], Splitted[2])
         print(f"Renamed {Splitted[1]} to {Splitted[2]}")
-    
+
     elif Splitted[0] == "crf":
         os.makedirs(Splitted[1] + "/" + Splitted[2], exist_ok=True)
         print(f"Created {Splitted[2]} at {Splitted[1]}")
-    
+
     elif Splitted[0] == "del":
         file = Path(Splitted[1] + "/" + Splitted[2])
         if file.exists() == True:
-            os.remove(file)
+            YN = input("Are you sure? Y/N: ")
+            if YN == "Y" or YN == "y":
+                os.remove(file)
+                print(f"{file} is removed")
         else:
             print("file doesnt exist")
-    
+
     elif Splitted[0] == "cp":
         cpfolder = Splitted[1]
         cpfile = Splitted[2]
 
         print(f"Copied{cpfolder}/{cpfile}")
-    
+
     elif Splitted[0] == "ps":
         pfolder = Splitted[1]
         pfile = Splitted[2]
@@ -59,7 +68,7 @@ while running:
     elif Splitted[0] == "rdtxt":
         print(open(Splitted[1] + "/" + Splitted[2]).read())
         print("end of file")
-    
+
     elif Splitted[0] == "help":
         print("commands:")
         print("mv <directory/file> <directory2/file> -- moves <directory/file> to <directory2/file>")
@@ -83,8 +92,17 @@ while running:
             print(f"Error: Path '{path}' not found")
         except NotADirectoryError:
             print(f"Error: '{path}' is not a directory")
-        
+
     elif Splitted[0] == "quit":
         running = False
+
+    elif plugin:
+        handled = plugin.handle(Splitted)
+        if not handled:
+            print("unknown command")
+
+        elif Splitted[0] == "quit":
+            running = False
+
 
 print("quitting terminal")
