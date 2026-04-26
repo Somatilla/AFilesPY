@@ -8,5 +8,7 @@ download it and put it somewhere in your files (i recommend the C: drive for ful
     mv |file| |directory| --moves file to directory <br>
     ren |filename| |filename2| --renames filename to filename2<br>
     crf |directory| |foldername| -- creates folder at directory<br>
+    rdtxt |directory| |file| -- reads |file| at |directory|<br>
+    del |directory| |file| -- deletes |file| at |directory|
     quit -- quits file manager
     <h5>Make sure that you use the extension in filenames (filename.txt)</h5>
